@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ShopEase - Online E-Commerce Shopping Platform</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        /* Navigation Bar */
+        header {
+            background-color: #222;
+            color: white;
+            padding: 15px 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            color: #ff9800;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 12px;
+            font-size: 16px;
+        }
+
+        nav a:hover {
+            color: #ff9800;
+        }
+
+        .cart {
+            background-color: #ff9800;
+            padding: 8px 14px;
+            border-radius: 5px;
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(
+                rgba(0,0,0,0.6),
+                rgba(0,0,0,0.6)
+            ),
+            url("https://images.unsplash.com/photo-1556742049-0cfed4f6a45d")
+            center/cover;
+
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content h1 {
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .hero-content p {
+            font-size: 20px;
+            margin-bottom: 25px;
+        }
+
+        .shop-btn {
+            background-color: #ff9800;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 17px;
+        }
+
+        .shop-btn:hover {
+            background-color: #e68900;
+        }
+
+        /* Search */
+        .search-section {
+            padding: 30px 7%;
+            text-align: center;
+        }
+
+        .search-section input {
+            width: 60%;
+            padding: 13px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        /* Categories */
+        .categories {
+            padding: 20px 7%;
+            text-align: center;
+        }
+
+        .categories h2 {
+            margin-bottom: 20px;
+        }
+
+        .category-btn {
+            padding: 10px 18px;
+            margin: 5px;
+            border: none;
+            background-color: #222;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .category-btn:hover {
+            background-color: #ff9800;
+        }
+
+        /* Products */
+        .products {
+            padding: 30px 7%;
+        }
+
+        .products h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .product-container {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-info h3 {
+            margin-bottom: 8px;
+        }
+
+        .price {
+            color: #e67e00;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .add-cart {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: #222;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .add-cart:hover {
+            background-color: #ff9800;
+        }
+
+        /* Features */
+        .features {
+            padding: 50px 7%;
+            background-color: white;
+            margin-top: 40px;
+        }
+
+        .feature-container {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            text-align: center;
+        }
+
+        .feature {
+            padding: 20px;
+        }
+
+        .feature h3 {
+            margin: 10px 0;
+            color: #222;
+        }
+
+        .feature p {
+            color: #666;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #222;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+        }
+
+        footer a {
+            color: #ff9800;
+            text-decoration: none;
+            margin: 0 8px;
+        }
+
+        /* Mobile */
+        @media(max-width: 768px) {
+
+            header {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            nav a {
+                margin: 5px;
+                font-size: 14px;
+            }
+
+            .hero-content h1 {
+                font-size: 32px;
+            }
+
+            .search-section input {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header>
+
+        <div class="logo">
+            ShopEase
+        </div>
+
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#products">Products</a>
+            <a href="#categories">Categories</a>
+            <a href="login.html">Login</a>
+            <a href="register.html">Register</a>
+            <a href="#cart" class="cart">
+                🛒 Cart <span id="cart-count">0</span>
+            </a>
+        </nav>
+
+    </header>
+
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+
+        <div class="hero-content">
+
+            <h1>Welcome to ShopEase</h1>
+
+            <p>
+                Your One-Stop Online Shopping Platform
+            </p>
+
+            <a href="#products" class="shop-btn">
+                Shop Now
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- Search -->
+    <section class="search-section">
+
+        <input
+            type="text"
+            id="search"
+            placeholder="Search for products..."
+            onkeyup="searchProducts()"
+        >
+
+    </section>
+
+
+    <!-- Categories -->
+    <section class="categories" id="categories">
+
+        <h2>Shop by Category</h2>
+
+        <button class="category-btn"
+                onclick="filterProducts('all')">
+            All
+        </button>
+
+        <button class="category-btn"
+                onclick="filterProducts('electronics')">
+            Electronics
+        </button>
+
+        <button class="category-btn"
+                onclick="filterProducts('fashion')">
+            Fashion
+        </button>
+
+        <button class="category-btn"
+                onclick="filterProducts('shoes')">
+            Shoes
+        </button>
+
+        <button class="category-btn"
+                onclick="filterProducts('accessories')">
+            Accessories
+        </button>
+
+    </section>
+
+
+    <!-- Products -->
+    <section class="products" id="products">
+
+        <h2>Featured Products</h2>
+
+        <div class="product-container">
+
+            <!-- Product 1 -->
+            <div class="product-card"
+                 data-category="electronics"
+                 data-name="Wireless Headphones">
+
+                <img
+                    src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e"
+                    alt="Wireless Headphones"
+                >
+
+                <div class="product-info">
+
+                    <h3>Wireless Headphones</h3>
+
+                    <p>
+                        High-quality wireless headphones
+                        with noise cancellation.
+                    </p>
+
+                    <div class="price">
+                        ₹2,499
+                    </div>
+
+                    <button
+                        class="add-cart"
+                        onclick="addToCart('Wireless Headphones')">
+                        Add to Cart
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Product 2 -->
+            <div class="product-card"
+                 data-category="electronics"
+                 data-name="Smart Watch">
+
+                <img
+                    src="https://images.unsplash.com/photo-1523275335684-37898b6baf30"
+                    alt="Smart Watch"
+                >
+
+                <div class="product-info">
+
+                    <h3>Smart Watch</h3>
+
+                    <p>
+                        Modern smartwatch with fitness
+                        tracking features.
+                    </p>
+
+                    <div class="price">
+                        ₹3,999
+                    </div>
+
+                    <button
+                        class="add-cart"
+                        onclick="addToCart('Smart Watch')">
+                        Add to Cart
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Product 3 -->
+            <div class="product-card"
+                 data-category="fashion"
+                 data-name="Men's Jacket">
+
+                <img
+                    src="https://images.unsplash.com/photo-1551028719-00167b16eac5"
+                    alt="Men's Jacket"
+                >
+
+                <div class="product-info">
+
+                    <h3>Men's Jacket</h3>
+
+                    <p>
+                        Stylish and comfortable casual jacket.
+                    </p>
+
+                    <div class="price">
+                        ₹1,799
+                    </div>
+
+                    <button
+                        class="add-cart"
+                        onclick="addToCart('Men Jacket')">
+                        Add to Cart
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Product 4 -->
+            <div class="product-card"
+                 data-category="shoes"
+                 data-name="Running Shoes">
+
+                <img
+                    src="https://images.unsplash.com/photo-1542291026-7eec264c27ff"
+                    alt="Running Shoes"
+                >
+
+                <div class="product-info">
+
+                    <h3>Running Shoes</h3>
+
+                    <p>
+                        Lightweight shoes designed for running.
+                    </p>
+
+                    <div class="price">
+                        ₹2,299
+                    </div>
+
+                    <button
+                        class="add-cart"
+                        onclick="addToCart('Running Shoes')">
+                        Add to Cart
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Product 5 -->
+            <div class="product-card"
+                 data-category="accessories"
+                 data-name="Leather Backpack">
+
+                <img
+                    src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62"
+                    alt="Leather Backpack"
+                >
+
+                <div class="product-info">
+
+                    <h3>Leather Backpack</h3>
+
+                    <p>
+                        Premium backpack suitable for college
+                        and travel.
+                    </p>
+
+                    <div class="price">
+                        ₹1,499
+                    </div>
+
+                    <button
+                        class="add-cart"
+                        onclick="addToCart('Leather Backpack')">
+                        Add to Cart
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Product 6 -->
+            <div class="product-card"
+                 data-category="electronics"
+                 data-name="Smartphone">
+
+                <img
+                    src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9"
+                    alt="Smartphone"
+                >
+
+                <div class="product-info">
+
+                    <h3>Smartphone</h3>
+
+                    <p>
+                        Powerful smartphone with modern features.
+                    </p>
+
+                    <div class="price">
+                        ₹19,999
+                    </div>
+
+                    <button
+                        class="add-cart"
+                        onclick="addToCart('Smartphone')">
+                        Add to Cart
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Features -->
+    <section class="features">
+
+        <div class="feature-container">
+
+            <div class="feature">
+
+                <h1>🚚</h1>
+
+                <h3>Fast Delivery</h3>
+
+                <p>
+                    Fast and reliable delivery to your doorstep.
+                </p>
+
+            </div>
+
+
+            <div class="feature">
+
+                <h1>🔒</h1>
+
+                <h3>Secure Payment</h3>
+
+                <p>
+                    Your transactions are protected with
+                    secure payment methods.
+                </p>
+
+            </div>
+
+
+            <div class="feature">
+
+                <h1>↩️</h1>
+
+                <h3>Easy Returns</h3>
+
+                <p>
+                    Simple and hassle-free product returns.
+                </p>
+
+            </div>
+
+
+            <div class="feature">
+
+                <h1>📞</h1>
+
+                <h3>24/7 Support</h3>
+
+                <p>
+                    Customer support whenever you need it.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+
+        <h3>ShopEase</h3>
+
+        <p>
+            Online E-Commerce Shopping Platform
+        </p>
+
+        <br>
+
+        <a href="#">About Us</a>
+        <a href="#">Contact</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms & Conditions</a>
+
+        <br><br>
+
+        <p>
+            © 2026 ShopEase. All Rights Reserved.
+        </p>
+
+    </footer>
+
+
+    <!-- JavaScript -->
+    <script>
+
+        let cartCount = 0;
+
+
+        // Add Product to Cart
+        function addToCart(productName) {
+
+            cartCount++;
+
+            document.getElementById("cart-count")
+                    .innerText = cartCount;
+
+            alert(productName + " added to cart!");
+
+        }
+
+
+        // Search Products
+        function searchProducts() {
+
+            let search =
+                document.getElementById("search")
+                .value
+                .toLowerCase();
+
+            let products =
+                document.querySelectorAll(".product-card");
+
+            products.forEach(function(product) {
+
+                let name =
+                    product
+                    .getAttribute("data-name")
+                    .toLowerCase();
+
+                if (name.includes(search)) {
+
+                    product.style.display = "block";
+
+                } else {
+
+                    product.style.display = "none";
+
+                }
+
+            });
+
+        }
+
+
+        // Filter Products
+        function filterProducts(category) {
+
+            let products =
+                document.querySelectorAll(".product-card");
+
+            products.forEach(function(product) {
+
+                if (
+                    category === "all" ||
+                    product.getAttribute("data-category")
+                    === category
+                ) {
+
+                    product.style.display = "block";
+
+                } else {
+
+                    product.style.display = "none";
+
+                }
+
+            });
+
+        }
+
+    </script>
+
+</body>
+</html>
